@@ -1,6 +1,7 @@
 <?php
 use Minicli\Output\Adapter\FilePrinterAdapter;
 use Minicli\Output\OutputHandler;
+use function PHPUnit\Framework\assertEquals;
 
 it('asserts that FilePrinterAdapter saves content to file', function () {
     $file_path = sys_get_temp_dir() . '/minicli-output-test.log';

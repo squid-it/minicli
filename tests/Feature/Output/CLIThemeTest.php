@@ -3,6 +3,9 @@
 use Minicli\Output\Theme\DefaultTheme;
 use Minicli\Output\Theme\UnicornTheme;
 use Minicli\Output\CLIColors;
+use function PHPUnit\Framework\assertArrayHasKey;
+use function PHPUnit\Framework\assertContains;
+use function PHPUnit\Framework\assertIsArray;
 
 it('asserts that Default CLI theme sets all default styles', function () {
     $theme = new DefaultTheme();

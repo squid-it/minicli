@@ -5,6 +5,11 @@ use Minicli\Config;
 use Minicli\Output\OutputHandler;
 use Minicli\Output\Adapter\DefaultPrinterAdapter;
 use Minicli\Exception\CommandNotFoundException;
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertIsCallable;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertStringContainsString;
+use function PHPUnit\Framework\assertTrue;
 
 it('asserts App is created', function () {
     $app = getBasicApp();
@@ -111,3 +116,10 @@ it('asserts App shows error when debug is set to false and command is not callab
 
     $app->runCommand(['minicli', 'minicli-test-error']);
 })->expectOutputString("\n" . $error_not_callable . "\n");
+
+it('asserts App uses DI', function () {
+    $app = getBasicApp();
+    $app->setOutputHandler(new OutputHandler(new DefaultPrinterAdapter()));
+
+    $app->runCommand(['minicli', 'test', 'di']);
+})->expectOutputString('my name is DI');

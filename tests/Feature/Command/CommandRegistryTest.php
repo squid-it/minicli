@@ -1,9 +1,12 @@
 <?php
 
-use Minicli\App;
-use Minicli\Command\CommandRegistry;
 use Minicli\Command\CommandNamespace;
 use Minicli\Exception\CommandNotFoundException;
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertNotNull;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertTrue;
 
 it('asserts Registry autoloads command namespaces', function () {
     $registry = getRegistry();
@@ -24,14 +27,14 @@ it('asserts Registry returns correct controller from namespace when no subcomman
     $registry = getRegistry();
     $controller = $registry->getCallableController("test");
 
-    assertTrue($controller instanceof \Assets\Command\Test\DefaultController);
+    assertEquals('Assets\Command\Test\DefaultController', $controller);
 });
 
 it('asserts Registry returns correct controller from namespace when a subcommand is passed', function () {
     $registry = getRegistry();
     $controller = $registry->getCallableController("test", "help");
 
-    assertTrue($controller instanceof \Assets\Command\Test\HelpController);
+    assertEquals('Assets\Command\Test\HelpController', $controller);
 });
 
 it('asserts Registry returns null when a namespace controller is not found', function () {
@@ -58,5 +61,5 @@ it('assets Registry returns full command list', function () {
 
     $command_list = $registry->getCommandMap();
     assertCount(2, $command_list);
-    assertCount(4, $command_list['test']);
+    assertCount(5, $command_list['test']);
 });

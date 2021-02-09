@@ -5,6 +5,9 @@ use Minicli\Output\Filter\ColorOutputFilter;
 use Minicli\Output\CLIColors;
 use Minicli\Output\Theme\UnicornTheme;
 use Minicli\Output\Filter\TimestampOutputFilter;
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertStringContainsString;
 
 it('asserts that SimpleOutputFilter returns unstyled content', function () {
     $simple = new SimpleOutputFilter();

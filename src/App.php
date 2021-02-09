@@ -2,11 +2,13 @@
 
 namespace Minicli;
 
+use DI\Container;
 use Minicli\Command\CommandCall;
 use Minicli\Command\CommandRegistry;
 use Minicli\Exception\CommandNotFoundException;
 use Minicli\Output\Helper\ThemeHelper;
 use Minicli\Output\OutputHandler;
+use Psr\Container\ContainerInterface;
 
 class App
 {
@@ -19,17 +21,21 @@ class App
     /** @var array  */
     protected $loaded_services = [];
 
+    /** @var ContainerInterface */
+    protected $container;
+
     /**
      * App constructor.
-     * @param array $config
      */
-    public function __construct(array $config = [])
+    public function __construct(array $config = [], ContainerInterface $container = null)
     {
         $config = array_merge([
             'app_path' => __DIR__ . '/../app/Command',
             'theme' => '',
             'debug' => true,
         ], $config);
+
+        $this->container = $container ?? new Container();
 
         $this->addService('config', new Config($config));
         $this->addService('command_registry', new CommandRegistry($this->config->app_path));
@@ -68,7 +74,7 @@ class App
     /**
      * @param string $name
      */
-    public function loadService($name)
+    public function loadService($name): void
     {
         $this->loaded_services[$name] = $this->services[$name]->load($this);
     }
@@ -152,7 +158,13 @@ class App
             return;
         }
 
-        $controller = $this->command_registry->getCallableController($input->command, $input->subcommand);
+        $controllerName = $this->command_registry->getCallableController($input->command, $input->subcommand);
+        if ($controllerName === null) {
+            $this->runSingle($input);
+            return;
+        }
+
+        $controller = $this->container->get($controllerName);
 
         if ($controller instanceof ControllerInterface) {
             $controller->boot($this);
@@ -160,8 +172,6 @@ class App
             $controller->teardown();
             return;
         }
-
-        $this->runSingle($input);
     }
 
     /**

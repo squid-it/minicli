@@ -1,6 +1,8 @@
 <?php
 
 use Minicli\Config;
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertTrue;
 
 it('asserts that config sets properties from constructor', function () {
     $config = new Config([
