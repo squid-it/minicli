@@ -91,3 +91,30 @@ try {
 }
 ```
 
+Example controller using DI
+
+```php
+<?php
+declare(strict_types=1);
+
+namespace Assets\Command\Test;
+
+use Assets\RandomClass\Reply;
+use Minicli\Command\CommandController;
+
+class DiController extends CommandController
+{
+    private Reply $reply;
+
+    public function __construct(Reply $reply)
+    {
+        $this->reply = $reply;
+    }
+
+    public function handle(): void
+    {
+        $this->getPrinter()->rawOutput($this->reply->myName('my name is DI'));
+    }
+}
+```
+
