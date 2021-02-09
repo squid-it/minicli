@@ -1,6 +1,10 @@
 <?php
 
 use Minicli\Command\CommandCall;
+use function PHPUnit\Framework\assertContains;
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertTrue;
 
 it('asserts input arguments are loaded and properties are set', function () {
     $call = new CommandCall(["minicli", "help", "test"]);

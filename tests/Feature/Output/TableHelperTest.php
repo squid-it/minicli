@@ -1,6 +1,8 @@
 <?php
 use Minicli\Output\Helper\TableHelper;
-use Minicli\Output\Filter\ColorOutputFilter;
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertStringContainsString;
 
 it('asserts that TableHelper creates table from constructor', function () {
     $table = [
@@ -28,7 +30,7 @@ it('asserts that TableHelper sets and outputs table rows', function () {
 
     for ($i = 1; $i <= 10; $i++) {
         $table->addRow([
-            $i, 'test', rand(0, 200)
+            $i, 'test', random_int(0, 200)
         ]);
     }
 

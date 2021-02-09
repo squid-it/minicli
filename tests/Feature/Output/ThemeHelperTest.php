@@ -3,6 +3,7 @@
 use Minicli\Output\Helper\ThemeHelper;
 use Minicli\Output\Theme\UnicornTheme;
 use Assets\Theme\CustomTheme;
+use function PHPUnit\Framework\assertInstanceOf;
 
 it('asserts that ThemeHelper instantiates the right existing theme', function () {
     $helper = new ThemeHelper('\Unicorn');
